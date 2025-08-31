@@ -59,7 +59,7 @@ export default function Home() {
           <h2 className="text-3xl font-extrabold text-[#fbbf24] mb-4 text-center">Our Journey</h2>
           <blockquote className="italic text-gray-300 text-lg mb-6 border-l-4 border-yellow-400 pl-4 ">{ourJourney}</blockquote>
           <div className="flex items-center gap-4 mt-2">
-            <img src="/vv_logo.png" alt="Founder" className="h-12 w-12 object-contain" />
+            <img src={process.env.PUBLIC_URL + '/vv_logo.png'} alt="Founder" className="h-12 w-12 object-contain" />
             <div className="text-left">
               <span className="block font-bold text-[#fbbf24]">Zarna</span>
               <span className="block text-xs text-gray-400">Founder & Chief Travel Curator</span>
