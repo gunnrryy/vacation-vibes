@@ -13,14 +13,15 @@ export default function Navbar() {
   const location = useLocation();
 
   return (
-  <nav className="bg-[#D1E9EE] shadow sticky top-0 z-50">
+  <>
+    <nav className="bg-gradient-to-b from-black via-gray-900 to-gray-800 shadow sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
+  <div className="flex justify-between h-16 items-center" style={{ fontFamily: 'Merriweather, serif' }}>
           <Link to="/" className="flex items-center gap-2">
             <img src="/vv_logo.png" alt="Vacation Vibes Logo" className="h-16 w-16 object-contain" />
             <span className="flex flex-col">
-              <span className="font-bold text-xl text-blue-900 tracking-wide">Vacation Vibes</span>
-              <span className="text-xs text-blue-700 font-medium -mt-1">Travel Curators</span>
+              <span className="font-bold text-xl text-[#fbbf24] tracking-wide" style={{ fontFamily: 'Merriweather, serif' }}>Vacation Vibes</span>
+              <span className="text-xs text-gray-300 font-medium -mt-1">Travel Curators</span>
             </span>
           </Link>
           <div className="hidden md:flex gap-6">
@@ -29,14 +30,14 @@ export default function Navbar() {
                 key={link.name}
                 to={link.path}
                 className={`text-lg font-medium transition-colors 
-                  ${location.pathname === link.path ? 'text-blue-900 underline' : 'text-blue-900 hover:text-blue-700'}`}
+                  ${location.pathname === link.path ? 'text-[#fbbf24] underline' : 'text-gray-100 hover:text-[#fbbf24]'}`}
               >
                 {link.name}
               </Link>
             ))}
           </div>
           <button
-            className="md:hidden flex items-center px-3 py-2 border rounded text-blue-900 border-blue-900 hover:bg-blue-50"
+            className="md:hidden flex items-center px-3 py-2 border rounded text-[#fbbf24] border-[#fbbf24] hover:bg-gray-800"
             onClick={() => setOpen(!open)}
             aria-label="Toggle navigation"
           >
@@ -46,13 +47,13 @@ export default function Navbar() {
           </button>
         </div>
         {open && (
-          <div className="md:hidden flex flex-col gap-2 mt-2 pb-4">
+          <div className="md:hidden flex flex-col gap-2 mt-2 pb-4 bg-gray-900 rounded-lg">
             {navLinks.map(link => (
               <Link
                 key={link.name}
                 to={link.path}
                 className={`text-lg font-medium transition-colors 
-                  ${location.pathname === link.path ? 'text-blue-900 underline' : 'text-blue-900 hover:text-blue-700'}`}
+                  ${location.pathname === link.path ? 'text-[#fbbf24] underline' : 'text-gray-100 hover:text-[#fbbf24]'}`}
                 onClick={() => setOpen(false)}
               >
                 {link.name}
@@ -62,5 +63,10 @@ export default function Navbar() {
         )}
       </div>
     </nav>
+    {/* Solid gold separator below navbar */}
+    <div className="w-full">
+      <div className="h-1 w-full bg-[#A16206]" />
+    </div>
+  </>
   );
 }

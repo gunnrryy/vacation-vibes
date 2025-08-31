@@ -16,9 +16,13 @@ import Contact from './pages/Contact';
 function App() {
   return (
     <Router>
-      <Navbar />
       <div className="flex flex-col min-h-screen">
-        <div className="flex-1">
+        {/* Sticky header and separator for desktop */}
+        <div className="sticky top-0 z-50 w-full">
+          <Navbar />
+        </div>
+        {/* Main content scrolls internally, footer sticky only on desktop */}
+        <div className="flex-1 overflow-y-auto w-full">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/itineraries" element={<ItineraryMarketplace />} />
@@ -30,7 +34,12 @@ function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </div>
-        <Footer />
+        <div className="hidden md:block sticky bottom-0 z-40 w-full">
+          <Footer />
+        </div>
+        <div className="block md:hidden w-full">
+          <Footer />
+        </div>
       </div>
     </Router>
   );
