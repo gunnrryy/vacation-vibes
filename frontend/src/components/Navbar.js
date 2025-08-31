@@ -18,7 +18,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
   <div className="flex justify-between h-16 items-center" style={{ fontFamily: 'Merriweather, serif' }}>
           <Link to="/" className="flex items-center gap-2">
-            <img src="/vv_logo.png" alt="Vacation Vibes Logo" className="h-16 w-16 object-contain" />
+            <img src={process.env.PUBLIC_URL + '/vv_logo.png'} alt="Vacation Vibes Logo" className="h-16 w-16 object-contain" />
             <span className="flex flex-col">
               <span className="font-bold text-xl text-[#fbbf24] tracking-wide" style={{ fontFamily: 'Merriweather, serif' }}>Vacation Vibes</span>
               <span className="text-xs text-gray-300 font-medium -mt-1">Travel Curators</span>
