@@ -16,13 +16,9 @@ import Contact from './pages/Contact';
 function App() {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen">
-        {/* Sticky header and separator for desktop */}
-        <div className="sticky top-0 z-50 w-full">
-          <Navbar />
-        </div>
-        {/* Main content scrolls internally, footer sticky only on desktop */}
-        <div className="flex-1 overflow-y-auto w-full">
+      <div className="flex flex-col min-h-screen bg-rich-black text-white">
+        <Navbar />
+        <main className="flex-1 w-full">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/itineraries" element={<ItineraryMarketplace />} />
@@ -33,13 +29,8 @@ function App() {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
-        </div>
-        <div className="hidden md:block sticky bottom-0 z-40 w-full">
-          <Footer />
-        </div>
-        <div className="block md:hidden w-full">
-          <Footer />
-        </div>
+        </main>
+        <Footer />
       </div>
     </Router>
   );

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -10,63 +11,122 @@ const navLinks = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Navbar background variants
+  const navVariants = {
+    hidden: { backgroundColor: 'rgba(0, 0, 0, 0)', backdropFilter: 'blur(0px)' },
+    visible: {
+      backgroundColor: 'rgba(17, 24, 39, 0.7)',
+      backdropFilter: 'blur(12px)',
+      boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)'
+    }
+  };
+
   return (
-  <>
-    <nav className="bg-gradient-to-b from-black via-gray-900 to-gray-800 shadow sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-  <div className="flex justify-between h-16 items-center" style={{ fontFamily: 'Merriweather, serif' }}>
-          <Link to="/" className="flex items-center gap-2">
-            <img src="/vv_logo.png" alt="Vacation Vibes Logo" className="h-16 w-16 object-contain" />
-            <span className="flex flex-col">
-              <span className="font-bold text-xl text-[#fbbf24] tracking-wide" style={{ fontFamily: 'Merriweather, serif' }}>Vacation Vibes</span>
-              <span className="text-xs text-gray-300 font-medium -mt-1">Travel Curators</span>
-            </span>
-          </Link>
-          <div className="hidden md:flex gap-6">
-            {navLinks.map(link => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className={`text-lg font-medium transition-colors 
-                  ${location.pathname === link.path ? 'text-[#fbbf24] underline' : 'text-gray-100 hover:text-[#fbbf24]'}`}
-              >
-                {link.name}
+    <>
+      <motion.nav
+        className="fixed top-0 w-full z-50 border-b border-white/10 transition-all duration-300"
+        initial="hidden"
+        animate={scrolled || open ? "visible" : "hidden"}
+        variants={navVariants}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-20 items-center">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-3 group">
+              <img
+                src={process.env.PUBLIC_URL + '/vv_logo.png'}
+                alt="Vacation Vibes"
+                className="h-12 w-12 object-contain transition-transform group-hover:scale-105"
+              />
+              <div className="flex flex-col">
+                <span className="font-serif text-2xl font-bold text-luxury-gold tracking-wider group-hover:text-luxury-gold-hover transition-colors">
+                  Vacation Vibes
+                </span>
+                <span className="text-[10px] text-gray-400 font-sans uppercase tracking-[0.2em]">
+                  Private Travel Curators
+                </span>
+              </div>
+            </Link>
+
+            {/* Desktop Links */}
+            <div className="hidden md:flex gap-8 items-center">
+              {navLinks.map(link => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className="relative group py-2"
+                >
+                  <span className={`text-sm font-medium tracking-wide uppercase transition-colors duration-300
+                    ${location.pathname === link.path ? 'text-luxury-gold' : 'text-gray-300 group-hover:text-white'}`}>
+                    {link.name}
+                  </span>
+                  <span className={`absolute bottom-0 left-0 w-full h-[1px] bg-luxury-gold transform origin-left transition-transform duration-300
+                    ${location.pathname === link.path ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}
+                  />
+                </Link>
+              ))}
+              <Link to="/contact" className="ml-4 px-6 py-2 bg-luxury-gold text-rich-black text-sm font-bold uppercase tracking-wider rounded-none hover:bg-white transition-colors duration-300">
+                Plan My Trip
               </Link>
-            ))}
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden text-luxury-gold hover:text-white transition-colors"
+              onClick={() => setOpen(!open)}
+              aria-label="Toggle navigation"
+            >
+              <div className="space-y-1.5">
+                <motion.span animate={{ rotateZ: open ? 45 : 0, y: open ? 8 : 0 }} className="block w-8 h-0.5 bg-current"></motion.span>
+                <motion.span animate={{ opacity: open ? 0 : 1 }} className="block w-8 h-0.5 bg-current"></motion.span>
+                <motion.span animate={{ rotateZ: open ? -45 : 0, y: open ? -8 : 0 }} className="block w-8 h-0.5 bg-current"></motion.span>
+              </div>
+            </button>
           </div>
-          <button
-            className="md:hidden flex items-center px-3 py-2 border rounded text-[#fbbf24] border-[#fbbf24] hover:bg-gray-800"
-            onClick={() => setOpen(!open)}
-            aria-label="Toggle navigation"
-          >
-            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
         </div>
-        {open && (
-          <div className="md:hidden flex flex-col gap-2 mt-2 pb-4 bg-gray-900 rounded-lg">
-            {navLinks.map(link => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className={`text-lg font-medium transition-colors 
-                  ${location.pathname === link.path ? 'text-[#fbbf24] underline' : 'text-gray-100 hover:text-[#fbbf24]'}`}
-                onClick={() => setOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-    </nav>
-    {/* Solid gold separator below navbar */}
-    <div className="w-full">
-      <div className="h-1 w-full bg-[#A16206]" />
-    </div>
-  </>
+
+        {/* Mobile Dropdown */}
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="md:hidden bg-rich-black/95 backdrop-blur-xl border-t border-white/10 overflow-hidden"
+            >
+              <div className="px-4 py-6 flex flex-col gap-4">
+                {navLinks.map(link => (
+                  <Link
+                    key={link.name}
+                    to={link.path}
+                    className="text-lg font-serif text-gray-200 hover:text-luxury-gold transition-colors"
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+                <div className="h-px bg-white/10 my-2" />
+                <Link
+                  to="/contact"
+                  className="text-center w-full py-3 bg-luxury-gold text-rich-black font-bold uppercase tracking-widest"
+                  onClick={() => setOpen(false)}
+                >
+                  Start Planning
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </>
   );
 }
