@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/vacation-vibes/static/css/main.15e60b74.css",
+    "main.js": "/vacation-vibes/static/js/main.71eef8ba.js",
+    "static/js/488.79b19bc3.chunk.js": "/vacation-vibes/static/js/488.79b19bc3.chunk.js",
+    "service-worker.js": "/vacation-vibes/service-worker.js",
+    "index.html": "/vacation-vibes/index.html",
+    "main.15e60b74.css.map": "/vacation-vibes/static/css/main.15e60b74.css.map",
+    "main.71eef8ba.js.map": "/vacation-vibes/static/js/main.71eef8ba.js.map",
+    "488.79b19bc3.chunk.js.map": "/vacation-vibes/static/js/488.79b19bc3.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.15e60b74.css",
+    "static/js/main.71eef8ba.js"
+  ]
+}
