@@ -13,8 +13,8 @@ module.exports = {
         'deep-emerald': '#022c22', // Emerald-950
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
+        sans: ['Product Sans', 'sans-serif'],
+        serif: ['Merriweather', 'serif'],
       },
     },
   },

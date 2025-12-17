@@ -1,8 +1,11 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaClock, FaMapMarkerAlt, FaStar } from 'react-icons/fa';
+import ImageSkeleton from './ImageSkeleton';
 
 export default function ItineraryCard({ title, location, duration, price, rating, image, delay = 0 }) {
+    const [isLoaded, setIsLoaded] = React.useState(false);
+
     return (
         <motion.div
             className="group relative h-[450px] w-full rounded-2xl overflow-hidden cursor-pointer"
@@ -12,13 +15,20 @@ export default function ItineraryCard({ title, location, duration, price, rating
             transition={{ duration: 0.6, delay, ease: 'easeOut' }}
         >
             {/* Background Image with Zoom Effect */}
+            {/* Background Image with Zoom Effect */}
             <div className="absolute inset-0 bg-gray-900">
+                <AnimatePresence mode="wait">
+                    {!isLoaded && (
+                        <ImageSkeleton className="w-full h-full" />
+                    )}
+                </AnimatePresence>
                 <img
                     src={image || "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"}
                     alt={title}
-                    className="w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-700 ease-out"
+                    onLoad={() => setIsLoaded(true)}
+                    className={`w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out ${!isLoaded ? 'opacity-0' : 'opacity-80'}`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
+                <div className={`absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent transition-opacity duration-300 ${!isLoaded ? 'opacity-0' : 'opacity-90'}`} />
             </div>
 
             {/* Content */}
